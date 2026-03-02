@@ -102,7 +102,7 @@ import { FeatureFlagEvaluationTags } from './FeatureFlagEvaluationTags'
 import { ExperimentsTab } from './FeatureFlagExperimentsTab'
 import { FeedbackTab } from './FeatureFlagFeedbackTab'
 import { FeatureFlagForm } from './FeatureFlagForm'
-import { DependentFlag, FeatureFlagLogicProps, featureFlagLogic } from './featureFlagLogic'
+import { DependentFlag, FeatureFlagLogicProps, featureFlagLogic, slugifyFeatureFlagKey } from './featureFlagLogic'
 import { FeatureFlagOverviewV2 } from './FeatureFlagOverviewV2'
 import FeatureFlagProjects from './FeatureFlagProjects'
 import { FeatureFlagReleaseConditions } from './FeatureFlagReleaseConditions'
@@ -404,7 +404,10 @@ export function FeatureFlag({ id }: FeatureFlagLogicProps): JSX.Element {
                                         <>
                                             <LemonInput
                                                 value={value}
-                                                onChange={onChange}
+                                                onChange={(v) => {
+                                                    const normalized = slugifyFeatureFlagKey(v)
+                                                    onChange(normalized)
+                                                }}
                                                 data-attr="feature-flag-key"
                                                 className="ph-ignore-input"
                                                 autoFocus
